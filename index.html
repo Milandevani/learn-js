@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form</title>
+</head>
+<style>
+  ul {
+    list-style: upper-roman;
+  }
+</style>
+
+<body>
+  <form id="eventForm">
+    <label for="eventName">Your name:</label>
+    <input type="text" id="eventName" required>
+    <button type="submit">Add data</button>
+  </form>
+  <br><br>
+  <h2>Your added data </h2>
+  <ul id="eventList"></ul>
+
+  <script>
+    // Retrieve data from local storage if available
+    let data = JSON.parse(localStorage.getItem('data')) || [];
+
+    // Function to update the event list in the browser
+    function updateEventList() {
+      const eventList = document.getElementById('eventList');
+      eventList.innerHTML = data.map((event, index) => `<li>${event} <button onclick="removeEvent(${index})">Remove</button></li>`).join('');
+    }
+
+    // // Function to add a new event
+    function addEvent(event) {
+      data.push(event);
+      localStorage.setItem('data', JSON.stringify(data));
+      updateEventList();
+    }
+
+    // // Function to remove an event
+    function removeEvent(index) {
+      data.splice(index, 1);
+      localStorage.setItem('data', JSON.stringify(data));
+      updateEventList();
+    }
+
+    // // Function to handle the form submission
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const eventNameInput = document.getElementById('eventName');
+      const eventName = eventNameInput.value;
+      addEvent(eventName);
+      eventNameInput.value = '';
+    }
+
+    // // Add event listener for form submission
+    const eventForm = document.getElementById('eventForm');
+    eventForm.addEventListener('submit', handleFormSubmit);
+
+    // Initial update of the event list
+    updateEventList();
+  </script>
+</body>
+
+</html>
