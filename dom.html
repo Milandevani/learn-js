@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .box {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        float: left;
+        background-color: red;
+        transition: width 0.3s, height 0.3s;
+    }
+
+    /* .box:hover {
+        width: var(--random-width);
+        height: var(--random-height);
+    } */
+    .box.randomsize {
+        width: var(--random-width);
+        height: var(--random-height);
+    }
+
+    /* --=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+    .box_2 {
+        width: 200px;
+        height: 200px;
+        float: right;
+        background-color: blue;
+        transition: background-color 0.3s;
+    }
+
+    /* .box_2:hover {
+        background-color: var(--random-color);
+    } */
+    .box_2.randomcolor {
+        background-color: var(--random-color);
+    }
+
+    /* --=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+    .box_3 {
+        width: 500px;
+        height: 500px;
+        border: 1px solid #000000;
+        margin: 0 auto;
+        text-align: center;
+        transition: all 0.3s;
+    }
+
+    .box_3:hover {
+        background-color: #f1f1f1;
+    }
+
+    .box_3 img {
+        margin: 0;
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .box_4 {
+        margin: 45px 0 30px;
+        text-align: center;
+    }
+
+    .box_4 button {
+        background: transparent;
+        border: 1px solid #000000;
+        padding: 8px 20px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="box"></div>
+    <div class="box_2"></div>
+    <div class="box_3">
+        <img src="./images/Dodge.jpg" alt="image">
+        <p class="text">Possessed by a 807-horsepower Supercharged 6.2L HEMI® High-Output SRT V8 engine, the 2023 Dodge
+            Charger SRT Redeye Jailbreak lives and breathes pure performance, leading its class in torque and horsepower
+            ( Disclosure6).For the 2023 model year, Jailbreak will be available across all Charger SRT models with
+            standard 717-horsepower.;</p>
+    </div>
+    <div class="box_4">
+        <button class="change">Change</button>
+    </div>
+
+    <script>
+
+
+const data = [
+    {
+        image: 'images/Dodge.jpg',
+        info: 'Possessed by a 807-horsepower Supercharged 6.2L HEMI® High-Output SRT V8 engine, the 2023 Dodge Charger SRT Redeye Jailbreak lives and breathes pure performance, leading its class in torque and horsepower ( Disclosure6).For the 2023 model year, Jailbreak will be available across all Charger SRT models with standard 717-horsepower.'
+    },
+    {
+        image: 'images/gt.jpg',
+        info: 'The Ford Mustang is a series of American automobiles manufactured by Ford. In continuous production since 1964, the Mustang is currently the longest-produced Ford car nameplate. Currently in its sixth generation, it is the fifth-best selling Ford car nameplate. The namesake of the "pony car" automobile segment, the Mustang was developed as a highly styled line of sporty coupes and convertibles derived from existing model lines, initially distinguished by "long hood, short deck" proportions'
+    },
+    {
+        image: 'images/lembo.jpg',
+        info: 'Lamborghini S.p.A. in 1963 to compete with Ferrari. The company was noted for using a rear mid-engine, rear-wheel drive layout. Lamborghini grew rapidly during its first decade, but sales plunged in the wake of the 1973 worldwide financial downturn and the oil crisis. The firms ownership changed three times after 1973, including a bankruptcy in 1978. American Chrysler Corporation took control of Lamborghini in 1987 and sold it to Malaysian investment group Mycom Setdco and Indonesian group Power Corporation in 1994.'
+    },
+]
+
+
+
+        const box = document.querySelector('.box')
+        const changeBtn = document.querySelector('.change')
+        var randomWidth;
+        var randomHeight;
+
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const box_2 = document.querySelector('.box_2');
+        const image = document.querySelector('img');
+        const text = document.querySelector('.text');
+
+        changeBtn.addEventListener('click', () => {
+            randomWidth = Math.floor(Math.random() * 100) + 100;
+            randomHeight = Math.floor(Math.random() * 100) + 100;
+
+
+            box.style.width = randomWidth + 'px'
+            box.style.height = randomHeight + 'px'
+            box_2.style.background = getRandomColor()
+
+            const randomIndex = Math.floor(Math.random() * data.length);
+
+            const randomINfo = data[randomIndex]
+
+            image.src = randomINfo.image
+            text.innerHTML = randomINfo.info
+
+
+            
+        })
+    </script>
+
+
+    <!-- <script>
+        const box = document.querySelector('.box');
+        box.addEventListener('mouseover', () => {
+            const randomWidth = Math.floor(Math.random() * 100) + 100;
+            const randomHeight = Math.floor(Math.random() * 100) + 100;
+            box.style.setProperty('--random-width', `${randomWidth}px`);
+            box.style.setProperty('--random-height', `${randomHeight}px`);
+        });
+
+        // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+        const box_2 = document.querySelector('.box_2');
+        box_2.addEventListener('mouseover', () => {
+        const randomColor = getRandomColor();
+        box_2.style.setProperty('--random-color', randomColor);
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-
+
+        const box_3 = document.querySelector('.box_3');
+        const image = box_3.querySelector('img');
+        const text = box_3.querySelector('.text');
+
+        const newImageSrc = './images/lembo.jpg';
+        const newText = ' Lamborghini S.p.A. in 1963 to compete with Ferrari. The company was noted for using a rear mid-engine, rear-wheel drive layout. Lamborghini grew rapidly during its first decade, but sales plunged in the wake of the 1973 worldwide financial downturn and the oil crisis. The firms ownership changed three times after 1973, including a bankruptcy in 1978. American Chrysler Corporation took control of Lamborghini in 1987 and sold it to Malaysian investment group Mycom Setdco and Indonesian group Power Corporation in 1994..';
+
+
+        box_3.addEventListener('mouseover', () => {
+            image.src = newImageSrc;
+            text.textContent = newText;
+        });
+
+        box_3.addEventListener('mouseout', () => {
+            image.src = './images/gt.jpg';
+            text.textContent = 'The Ford Mustang is a series of American automobiles manufactured by Ford. In continuous production since 1964, the Mustang is currently the longest-produced Ford car nameplate. Currently in its sixth generation, it is the fifth-best selling Ford car nameplate. The namesake of the "pony car" automobile segment, the Mustang was developed as a highly styled line of sporty coupes and convertibles derived from existing model lines, initially distinguished by "long hood, short deck" proportions..';
+        });
+
+        const changebutton = document.querySelector('.box_4 button');
+        changebutton.addEventListener('click', () => {
+            randombox1();
+        });
+    </script> -->
+</body>
+
+</html>
