@@ -1,67 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form</title>
+    <title>Tip Calculator</title>
 </head>
 <style>
-  ul {
-    list-style: upper-roman;
-  }
+    .calculeter{
+        margin: 0 auto;
+        padding-left: 20px;
+        width: 300px;
+        height: 280px;
+        background-color: aqua;
+    }
+
+    input{
+        width: 270px;
+        border-radius: 2px;
+        border: 1px solid #fff;
+    }
+
+    button{
+        width: 120px;
+        height: 25px;
+        border-radius: 8px;
+        background-color: aquamarine;
+        border: 1px solid #fff;
+        margin-left: 80px;
+        margin-top: 20px;
+    }
 </style>
-
 <body>
-  <form id="eventForm">
-    <label for="eventName">Your name:</label>
-    <input type="text" id="eventName" required>
-    <button type="submit">Add data</button>
-  </form>
-  <br><br>
-  <h2>Your added data </h2>
-  <ul id="eventList"></ul>
+    <div class="calculeter">
+        <h1>Tip Calculator</h1>
+    <label for="billamount">Bill Amount: </label>
+    <input type="number" id="billamount" min="0">
+    <br>
+    <label for="tippercentage">Tip Percentage: </label>
+    <input type="number" id="tippercentage" min="0" max="100">
+    <br>
+    <button onclick="calculateTip()">Calculate Tip</button>
+    <br>
+    <h3>Tip Amount: <span id="tipamount"></span></h3>
+    <h3>Total Amount: <span id="totalamount"></span></h3>
+    </div>
 
-  <script>
-    // Retrieve data from local storage if available
-    let data = JSON.parse(localStorage.getItem('data')) || [];
+    <script>
+        function calculateTip() {
+            // Get the bill amount and tip percentage
+            var billamount = parseFloat(document.getElementById("billamount").value);
+            var tippercentage = parseFloat(document.getElementById("tippercentage").value);
 
-    // Function to update the event list in the browser
-    function updateEventList() {
-      const eventList = document.getElementById('eventList');
-      eventList.innerHTML = data.map((event, index) => `<li>${event} <button onclick="removeEvent(${index})">Remove</button></li>`).join('');
-    }
+            if (isNaN(billamount) || isNaN(tippercentage)) {
+                alert("Please enter valid numbers.");
+                return;
+            }
 
-    // // Function to add a new event
-    function addEvent(event) {
-      data.push(event);
-      localStorage.setItem('data', JSON.stringify(data));
-      updateEventList();
-    }
+            // Calculate the tip amount and total amount
+            var tipamount = (billamount * tippercentage) / 100;
+            var totalamount = billamount + tipamount;
 
-    // // Function to remove an event
-    function removeEvent(index) {
-      data.splice(index, 1);
-      localStorage.setItem('data', JSON.stringify(data));
-      updateEventList();
-    }
+            // Display the tip amount and total amount
+            document.getElementById("tipamount").textContent = "$" + tipamount.toFixed(2);
+            document.getElementById("totalamount").textContent = "$" + totalamount.toFixed(2);
+        }
 
-    // // Function to handle the form submission
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      const eventNameInput = document.getElementById('eventName');
-      const eventName = eventNameInput.value;
-      addEvent(eventName);
-      eventNameInput.value = '';
-    }
-
-    // // Add event listener for form submission
-    const eventForm = document.getElementById('eventForm');
-    eventForm.addEventListener('submit', handleFormSubmit);
-
-    // Initial update of the event list
-    updateEventList();
-  </script>
+    </script>
 </body>
 
 </html>
